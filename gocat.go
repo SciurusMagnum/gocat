@@ -1,7 +1,14 @@
 package main
 
+//"golang.org/x/crypto/ssh/terminal"
+// if terminal.IsTerminal(int(os.Stdin.Fd())) {
+//         fmt.Println("Hello terminal")
+//     } else {
+//         fmt.Println("Who are you?  You're not a terminal.")
+//     }
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"net"
 	"os"
@@ -57,7 +64,12 @@ func initializeConnection(servAddr string) *net.TCPConn {
 }
 
 func main() {
-	servAddr := "localhost:6666"
+	flag.Parse()
+	args := flag.Args()
+	ip := args[0]
+	port := args[1]
+	servAddr := fmt.Sprintf("%s:%s", ip, port)
+	// servAddr := "localhost:6666"
 	conn := initializeConnection(servAddr)
 	defer conn.Close()
 	ioReader := bufio.NewReader(os.Stdin)
