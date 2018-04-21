@@ -64,10 +64,18 @@ func initializeConnection(servAddr string) *net.TCPConn {
 }
 
 func main() {
+	// readFile := flag.String("f", "", "read from file nad send all data")
+	// listen := flag.Bool("l", false, "listen for connections")
+	var ip, port string
 	flag.Parse()
 	args := flag.Args()
-	ip := args[0]
-	port := args[1]
+	if 2 == len(args) {
+		ip = args[0]
+		port = args[1]
+	} else {
+		println("Usage: gocat <host> <port>")
+		os.Exit(1)
+	}
 	servAddr := fmt.Sprintf("%s:%s", ip, port)
 	// servAddr := "localhost:6666"
 	conn := initializeConnection(servAddr)
